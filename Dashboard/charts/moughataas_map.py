@@ -1,22 +1,17 @@
-def moughataas_map(file_name):
-    """
-    Prend comme argument le nom du fichier GeoJSON (sous la forme 'nom_du_fichier.geojson') 
-    contenant le taux d'insécurité alimenataire, le nombre d'habitants 
-    et le nombre de ménages par Moughataas.
-    Renvoie une carte choroplèthe mettant en avant les zones les plus touchées par l'insécurité alimentaire.
-    """
-    # Lecture du fichier GeoJSON
-    file = open(file_name)
-    gj = geojson.load(file)
-    
+import pandas as pd
+import plotly.graph_objects as go
+
+def InfoMoughataas(gj) :
     # Création d'une table reprenant le taux d'insécurité alimenataire,
     # le nombre d'habitants et le nombre de ménages par Moughataas
     taux_ia = [gj['features'][i]['properties']['taux_IA'] for i in range(len(gj['features']))]
     n_pop = [gj['features'][i]['properties']['n_pop'] for i in range(len(gj['features']))]
     n_hh = [gj['features'][i]['properties']['n_hh'] for i in range(len(gj['features']))]
     info_moughataas = pd.DataFrame([taux_ia, n_pop, n_hh]).T.rename(columns={0:'taux_ia', 1:'n_pop', 2:'n_hh'})
+    return(info_moughataas)
 
-    # Color map sur mesure créée avec https://vis4.net/palettes/
+def MoughataasMap(gj, df, valueInf, valueSup) : 
+    #Color map sur mesure créée avec https://vis4.net/palettes/
     custom_cmap = ['#ffffff', '#fffdfd', '#fffbfb', '#fff9f9', '#fff7f7', '#fff5f4', '#fff3f2', '#fff1f0', 
                    '#ffefee', '#ffedec', '#ffebea', '#ffe9e8',  '#ffe7e6', '#ffe5e4', '#ffe3e1', '#ffe1df', 
                    '#ffdfdd', '#ffdddb', '#ffdbd9', '#ffd9d7',  '#ffd7d5', '#ffd5d3', '#ffd3d0', '#ffd1ce', 
@@ -34,11 +29,11 @@ def moughataas_map(file_name):
 
     # Carte représentant le taux d'insécurité par Moughataas
     fig = go.Figure(go.Choroplethmapbox(geojson=gj, 
-                                        locations=info_moughataas.index, 
+                                        locations=df.index, 
                                         featureidkey='properties.ID_2',
-                                        z=info_moughataas['taux_ia'],
+                                        z=df['taux_ia'],
                                         colorscale=custom_cmap, 
-                                        zmin=0, zmax=0.6, 
+                                        zmin=valueInf, zmax=valueSup, 
                                         marker_line_width=0,
                                         colorbar=dict(outlinecolor='white')
                                        )
@@ -52,4 +47,5 @@ def moughataas_map(file_name):
                       margin={'r':0,'t':0,'l':0,'b':0} # Marges de la figure
                      )
 
-    fig.show()
+    # fig.show()
+    return(fig)

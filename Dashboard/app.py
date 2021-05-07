@@ -5,27 +5,21 @@ import dash_html_components as html
 from dash.dependencies import Input, Output, State
 import pandas as pd
 import numpy as np
-from charts.mapRepresentation import MapRepresentation
+# from charts.mapRepresentation import MapRepresentation
+from charts.moughataas_map import InfoMoughataas, MoughataasMap
+from utils.loadGeojson import LoadGeojson
 
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 
-df = pd.DataFrame({
-    "x": [1,2,1,2],
-    "y": [1,2,3,4],
-    "year" : [2011, 2011, 2011, 2012],
-    "customdata": [1,2,3,4],
-    "fruit": ["apple", "apple", "orange", "orange"]
-})
-# df = pd.read_json('Dashboard/data/data2020.json')
-
-fig = MapRepresentation(df)
+GJ = LoadGeojson('Dashboard/data/Moughataas_new.geojson')
+info_moughataas = InfoMoughataas(GJ)
 
 app.layout = html.Div([
     html.H1("Appli GeoWatch Labs", style= {'text-align' : 'center', 'margin-bottom' : '40px'}),
     html.H6("Choix de l'année", style = {'margin-bottom' : '20px'}),
-    dcc.RadioItems(id='yearChoice',
+    dcc.Dropdown(id='yearChoice',
     options=[
         {'label': 'Année 2010', 'value': 2010},
         {'label': 'Année 2011', 'value': 2011},
@@ -34,15 +28,16 @@ app.layout = html.Div([
         {'label': 'Année 2014', 'value': 2014}
     ],
     value='2011',
-    labelStyle={'display': 'inline-block'}, style = {'margin-bottom' : '20px'}
+    style = {'margin-bottom' : '20px'}
 ) ,
 
     html.H6("Taux d'insécurité alimentaire", style = {'margin-bottom' : '20px'}),
-    dcc.RangeSlider(
-    marks = {i: '{}'.format(round(i, 2)) for i in np.arange(0, 1, 0.05)}, 
+    dcc.RangeSlider( id ='iaThreshold',
+    marks = {i: '{}'.format(i/10) for i in range(1,10)}, 
+    step= 0.05,
     min=0.,
-    max=1.,
-    value=[0., 1.]
+    max=10,
+    value=[0, 10]
 ), 
 
     dcc.Graph(
@@ -52,10 +47,12 @@ app.layout = html.Div([
 
 @app.callback(
     Output('graph-with-year', 'figure'),
-    Input('yearChoice', 'value'))
-def update_figure(selected_year):
-    filtered_df = df[df.year == selected_year]
-    return MapRepresentation(filtered_df)
+    [Input('iaThreshold', 'value')])
+def update_figure(value):
+    # filtered_info_moughataas = FilterMoughatas(info_moughataas, 0.3, 0.7)
+    # filtered_df = df[df.year == selected_year]
+    return MoughataasMap(gj= GJ, df=info_moughataas, valueInf= value[0]/10, valueSup=value[1]/10)
+    # return moughataas_map('Dashboard/data/Moughataas_new.geojson')
 
 if __name__ == '__main__':
     app.run_server(debug=True)

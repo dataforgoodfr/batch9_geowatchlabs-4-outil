@@ -35,8 +35,14 @@ def MoughataasMap(gj, df, valueInf, valueSup) :
                                         colorscale=custom_cmap, 
                                         zmin=valueInf, zmax=valueSup, 
                                         marker_line_width=0,
-                                        colorbar=dict(outlinecolor='white')
+                                        colorbar=dict(outlinecolor='white'),
+                                        customdata = df, 
+                                        hovertemplate="<br>".join([
+                                                "Taux IA: %{customdata[0]:.1%}",
+                                                "Population: %{customdata[1]}",
+                                                "Foyers: %{customdata[2]}"])
                                        )
+                                       
                    )
 
     # Mise en forme

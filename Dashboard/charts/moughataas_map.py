@@ -7,7 +7,8 @@ def InfoMoughataas(gj) :
     taux_ia = [gj['features'][i]['properties']['taux_IA'] for i in range(len(gj['features']))]
     n_pop = [gj['features'][i]['properties']['n_pop'] for i in range(len(gj['features']))]
     n_hh = [gj['features'][i]['properties']['n_hh'] for i in range(len(gj['features']))]
-    info_moughataas = pd.DataFrame([taux_ia, n_pop, n_hh]).T.rename(columns={0:'taux_ia', 1:'n_pop', 2:'n_hh'})
+    name = [gj['features'][i]['properties']['NAME_2'] for i in range(len(gj['features']))]
+    info_moughataas = pd.DataFrame([name, taux_ia, n_pop, n_hh]).T.rename(columns={0: 'name', 1: 'taux_ia', 2:'n_pop', 3:'n_hh'})
     return(info_moughataas)
 
 def MoughataasMap(gj, df, valueInf, valueSup) : 
@@ -38,9 +39,11 @@ def MoughataasMap(gj, df, valueInf, valueSup) :
                                         colorbar=dict(outlinecolor='white'),
                                         customdata = df, 
                                         hovertemplate="<br>".join([
-                                                "Taux IA: %{customdata[0]:.1%}",
-                                                "Population: %{customdata[1]}",
-                                                "Foyers: %{customdata[2]}"])
+                                                "<b>%{customdata[0]}</b>",
+                                                "Taux IA: %{customdata[1]:.1%}",
+                                                "Population: %{customdata[2]}",
+                                                "Foyers: %{customdata[3]}",
+                                                "<extra>%{customdata[0]}</extra>"])
                                        )
                                        
                    )

@@ -51,7 +51,7 @@ app.layout = html.Div([
 def update_figure(value):
     # filtered_info_moughataas = FilterMoughatas(info_moughataas, 0.3, 0.7)
     # filtered_df = df[df.year == selected_year]
-    return MoughataasMap(gj= GJ, df=info_moughataas, valueInf= value[0]/10, valueSup=value[1]/10)
+    return MoughataasMap(gj= GJ, df=info_moughataas)
     # return moughataas_map('Dashboard/data/Moughataas_new.geojson')
 
 if __name__ == '__main__':

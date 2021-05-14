@@ -25,12 +25,12 @@ def MoughataasMap(gj, df) :
     df.loc[(df.taux_ia>=0.30)&(df.taux_ia<0.40), 'intervalles'] = '30-40%'
     df.loc[(df.taux_ia>=0.40), 'intervalles'] = '> 40%'
 
-    colorscales = [((0.0, '#004d1a'), (1.0, '#004d1a')), # Couleur de l'intervalle '0-5%'
-                   ((0.0, '#86962e'), (1.0, '#86962e')), # Couleur de l'intervalle 5-10%'
-                   ((0.0, '#ffe443'), (1.0, '#ffe443')), # Couleur de l'intervalle 10-20%'
-                   ((0.0, '#ffaa47'), (1.0, '#ffaa47')), # Couleur de l'intervalle '20-30%'
-                   ((0.0, 'tomato'), (1.0, 'tomato')), # Couleur de l'intervalle '30-40%'
-                   ((0.0, 'crimson'), (1.0, 'crimson')) # Couleur de l'intervalle '> 40%'
+    colorscales = [((0.0, '#024B1A'), (1.0, '#024B1A')), # Couleur de l'intervalle '0-5%'
+                   ((0.0, '#A2BF05'), (1.0, '#A2BF05')), # Couleur de l'intervalle 5-10%'
+                   ((0.0, '#FAE147'), (1.0, '#FAE147')), # Couleur de l'intervalle 10-20%'
+                   ((0.0, '#FAA94B'), (1.0, '#FAA94B')), # Couleur de l'intervalle '20-30%'
+                   ((0.0, '#F16C54'), (1.0, '#F16C54')), # Couleur de l'intervalle '30-40%'
+                   ((0.0, '#D21E42'), (1.0, '#D21E42')) # Couleur de l'intervalle '> 40%'
                   ]
 
     # Tri de la dataframe du plus petit au plus grand de sorte à ce que 

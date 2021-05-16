@@ -5,9 +5,9 @@ import dash_html_components as html
 from dash.dependencies import Input, Output, State
 import pandas as pd
 import numpy as np
-# from charts.mapRepresentation import MapRepresentation
 from charts.moughataas_map import InfoMoughataas, MoughataasMap
 from utils.loadGeojson import LoadGeojson
+from charts.mapRepresentation import MapRepresentation
 
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
@@ -15,6 +15,7 @@ app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 
 GJ = LoadGeojson('Dashboard/data/Moughataas_new.geojson')
 info_moughataas = InfoMoughataas(GJ)
+variable = 'text'
 
 app.layout = html.Div([
     html.H1("Appli GeoWatch Labs", style= {'text-align' : 'center', 'margin-bottom' : '40px'}),
@@ -39,20 +40,33 @@ app.layout = html.Div([
     max=10,
     value=[0, 10]
 ), 
-
-    dcc.Graph(
-        id='graph-with-year'
-    )
+        dcc.Tabs( id = 'tabs', value = '1', children=
+                [
+                    dcc.Tab(label="Pays",  value = '1', children= [ dcc.Graph(id ='graph1')]),
+                    dcc.Tab(label="Moughataas", value = '2', children= [html.Div ( id= 'graph2')])],
+            )
 ])
 
 @app.callback(
-    Output('graph-with-year', 'figure'),
+    Output('graph1', 'figure'),
     [Input('iaThreshold', 'value')])
 def update_figure(value):
-    # filtered_info_moughataas = FilterMoughatas(info_moughataas, 0.3, 0.7)
-    # filtered_df = df[df.year == selected_year]
+    MoughataasMap(gj= GJ, df=info_moughataas, valueInf= value[0]/10, valueSup=value[1]/10)
     return MoughataasMap(gj= GJ, df=info_moughataas, valueInf= value[0]/10, valueSup=value[1]/10)
-    # return moughataas_map('Dashboard/data/Moughataas_new.geojson')
+
+@app.callback(
+    Output('graph2', 'children'),
+    Output('tabs', 'value'),
+    [Input('graph1', 'clickData')])
+def update_map(clickData):    
+    if clickData is not None:            
+        location = clickData['points'][0]['location']
+        location = info_moughataas.loc[location, 'name']
+        tab = '2'
+    else : 
+        location = 'pas de location'
+        tab = '1'
+    return location, tab
 
 if __name__ == '__main__':
     app.run_server(debug=True)

@@ -51,8 +51,9 @@ app.layout = html.Div([
     Output('graph1', 'figure'),
     [Input('iaThreshold', 'value')])
 def update_figure(value):
-    MoughataasMap(gj= GJ, df=info_moughataas, valueInf= value[0]/10, valueSup=value[1]/10)
-    return MoughataasMap(gj= GJ, df=info_moughataas, valueInf= value[0]/10, valueSup=value[1]/10)
+    # filtered_info_moughataas = FilterMoughatas(info_moughataas, 0.3, 0.7)
+    # filtered_df = df[df.year == selected_year]
+    return MoughataasMap(gj= GJ, df=info_moughataas)
 
 @app.callback(
     Output('graph2', 'children'),

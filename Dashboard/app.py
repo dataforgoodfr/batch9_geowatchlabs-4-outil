@@ -16,7 +16,6 @@ app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 
 GJ = LoadGeojson('Dashboard/data/Moughataas_new.geojson')
 info_moughataas = InfoMoughataas(GJ)
-variable = 'text'
 
 app.layout = html.Div([
     html.H1("Appli GeoWatch Labs", style= {'text-align' : 'center', 'margin-bottom' : '40px'}),

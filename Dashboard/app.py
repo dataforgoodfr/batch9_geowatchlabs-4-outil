@@ -3,11 +3,12 @@ import dash
 import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output, State
+import dash_daq as daq
 import pandas as pd
 import numpy as np
+import dash_daq as daq
 from charts.moughataas_map import InfoMoughataas, MoughataasMap
 from utils.loadGeojson import LoadGeojson
-from charts.mapRepresentation import MapRepresentation
 
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
@@ -32,28 +33,39 @@ app.layout = html.Div([
     style = {'margin-bottom' : '20px'}
 ) ,
 
-    html.H6("Taux d'insécurité alimentaire", style = {'margin-bottom' : '20px'}),
-    dcc.RangeSlider( id ='iaThreshold',
-    marks = {i: '{}'.format(i/10) for i in range(1,10)}, 
-    step= 0.05,
-    min=0.,
-    max=10,
-    value=[0, 10]
-), 
-        dcc.Tabs( id = 'tabs', value = '1', children=
+    dcc.Tabs( id = 'tabs', value = '1', children=
                 [
-                    dcc.Tab(label="Pays",  value = '1', children= [ dcc.Graph(id ='graph1')]),
-                    dcc.Tab(label="Moughataas", value = '2', children= [html.Div ( id= 'graph2')])],
-            )
-])
+                    dcc.Tab(label="Pays",  value = 'pays', style = {'display': 'flex'},
+                    children= [ 
+                                html.Div(
+                                style={'width': '30%', 'float' : 'left', 'text-align' : 'center', 'padding-top' : '50px'},
+                                children= [
+                                html.H3( "Taux d'insécurité alimentaire limite"),
+                                html.Div(style = {'margin' : 'auto', 'margin-top' : '50px', 'margin-bottom' : '60px'}, 
+                                        children=[daq.Slider(id = 'iaThreshold', min=0, max=1, value=0.2, handleLabel={"showCurrentValue": True,"label": "IA"},step = 0.01)]),
+                                html.H3('Population'),
+                                html.Div(style = {'font-size' : '25px', 'margin-bottom': '60px'}, id= 'population'),
+                                html.H3('Foyers'),
+                                html.Div(style = {'font-size' : '25px'}, id='foyers')]),
+                        html.Div( 
+                            style = {'width' : '70%', 'float': 'right', 'padding-top' : '50px'},
+                            children= [dcc.Graph(id ='graph1')])
+                            ]),
+                    dcc.Tab(label="Moughataas", value = 'region', children= [html.Div ( id= 'graph2')])],
+                    )
+                ])
 
 @app.callback(
     Output('graph1', 'figure'),
+    Output('population', 'children'),
+    Output('foyers', 'children'),
     [Input('iaThreshold', 'value')])
 def update_figure(value):
-    # filtered_info_moughataas = FilterMoughatas(info_moughataas, 0.3, 0.7)
-    # filtered_df = df[df.year == selected_year]
-    return MoughataasMap(gj= GJ, df=info_moughataas)
+    df = info_moughataas.copy()
+    df_filtered = df.loc[df.taux_ia> value, ['n_pop', 'n_hh']]
+    pop = df_filtered.n_pop.sum()
+    foy= df_filtered.n_hh.sum()
+    return MoughataasMap(gj= GJ, df=df, tauxIA = value), '{:,.0f}'.format(pop), '{:,.0f}'.format(foy)
 
 @app.callback(
     Output('graph2', 'children'),
@@ -62,11 +74,11 @@ def update_figure(value):
 def update_map(clickData):    
     if clickData is not None:            
         location = clickData['points'][0]['location']
-        location = info_moughataas.loc[location, 'name']
-        tab = '2'
+        location = info_moughataas.loc[location, 'nom']
+        tab = 'region'
     else : 
         location = 'pas de location'
-        tab = '1'
+        tab = 'pays'
     return location, tab
 
 if __name__ == '__main__':

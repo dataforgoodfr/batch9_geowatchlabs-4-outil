@@ -13,7 +13,7 @@ def InfoMoughataas(gj) :
     info_moughataas['n_hh'] = [gj['features'][i]['properties']['n_hh'] for i in range(len(gj['features']))]
     
     # Résolution du problème d'encodage des lettres avec accent
-    info_moughataas['nom'] = [name.encode("latin_1").decode("utf_8") for name in info_moughataas['nom']]
+    #info_moughataas['nom'] = [name.encode("latin_1").decode("utf_8") for name in info_moughataas['nom']]
     return(info_moughataas)
 
 def MoughataasMap(gj, df, tauxIA) : 
@@ -52,8 +52,8 @@ def MoughataasMap(gj, df, tauxIA) :
 
     # Carte représentant le taux d'insécurité par Moughataas.
     fig = px.choropleth_mapbox(geojson=gj, 
-                                        locations=df.index, 
-                                        featureidkey='properties.ID_2',
+                                        locations=df['nom'], 
+                                        featureidkey='properties.NAME_2',
                                         color=df['intervalles'],
                                         color_discrete_map= color_map
     )

@@ -31,46 +31,63 @@ def MoughataasMap(gj, df, tauxIA) :
     df.loc[(df.filter_taux_ia>=0.40), 'intervalles'] = '> 40%'
 
     # Color Map : dictionnaire permettat d'attribuer à chaque catégorie une couleur spécifique 
-    color_map={
-                "Hors périmètre": "#f1f1f1",
-                "0-5%": "#024B1A",
-                "5-10%": "#A2BF05",
-                "10-20%": "#FAE147",
-                "20-30%": "#FAA94B",
-                "30-40%" : "#F16C54",
-                "> 40%" : "#D21E42"}
+    color_map={'Hors périmètre': '#f1f1f1',
+               '0-5%': '#024B1A',
+               '5-10%': '#A2BF05',
+               '10-20%': '#FAE147',
+               '20-30%': '#FAA94B',
+               '30-40%' : '#F16C54',
+               '> 40%' : '#D21E42'
+              }
 
-    # Tri de la dataframe du plus petit au plus grand de sorte à ce que 
-    # l'ordre des seuils corresponde à l'ordre des couleurs dans 'colorscales'
-    df = df.sort_values('intervalles')
-
-    # Mise en forme des valeurs 'nombre de d'habitants' et 'nombre de ménages'.
+    # Mise en forme des valeurs 'nombre d'habitants' et 'nombre de ménages'.
     # Utilisation de l'espace comme séparateur de milliers.
     df.n_pop = ['{:,.0f}'.format(v).replace(',',' ') for v in df.n_pop]
     df.n_hh = ['{:,.0f}'.format(v).replace(',',' ') for v in df.n_hh]
 
 
-    # Carte représentant le taux d'insécurité par Moughataas.
-    fig = px.choropleth_mapbox(geojson=gj, 
-                                        locations=df['nom'], 
-                                        featureidkey='properties.NAME_2',
-                                        color=df['intervalles'],
-                                        color_discrete_map= color_map
-    )
+    # Carte représentant le taux d'insécurité par Moughataas
+    fig = px.choropleth(geojson=gj, 
+                        locations=df['nom'], 
+                        featureidkey='properties.NAME_2',
+                        color=df['intervalles'],
+                        category_orders={'intervalles': ['Hors périmètre',
+                                                         '0-5%',
+                                                         '5-10%',
+                                                         '10-20%',
+                                                         '20-30%',
+                                                         '30-40%',
+                                                         '> 40%'
+                                                        ]
+                                        },
+                        color_discrete_map=color_map,      
+                        data_frame=df,
+                        custom_data=['nom', 'taux_ia', 'n_pop', 'n_hh']
+                       )
                                        
     # Mise en forme de la carte
-    fig.update_traces(marker={'line': {'color': 'white', 'width': 1.15}}, 
-                customdata = df,
-                hovertemplate= "<br>".join([
-                            "<b>%{customdata[0]}</b>",
-                            "Taux IA: %{customdata[1]:.1%}",
-                            "Population: %{customdata[2]}",
-                            "Foyers: %{customdata[3]}",
-                            "<extra></extra>"]),
-                hoverlabel=dict(bgcolor='#000066')) # Couleur de fond du hover
-    fig.update_layout(mapbox_style='white-bg', # Projeter la carte sans faire apparaître les pays voisins
-                      mapbox_zoom=4.7, # Taille de la carte projetée
-                      mapbox_center = {'lat': 21, 'lon': -10}, # Centrer la carte
-                      margin={'r':0,'t':0,'l':0,'b':0}, # Marges de la figure
+    fig.update_traces(marker={'line': {'color': 'white', 'width': 1.15}},
+                      hovertemplate= "<br>".join(["<b>%{customdata[0]}</b>",
+                                                  "Taux IA: %{customdata[1]:.1%}",
+                                                  "Population: %{customdata[2]}",
+                                                  "Foyers: %{customdata[3]}",
+                                                  "<extra></extra>"
+                                                 ]
+                                                ),
+                      hoverlabel=dict(bgcolor='#000066')) # Couleur de fond du hover
+    
+    fig.update_layout(margin=dict(r=0, t=0, l=0, b=0), # Supression des marges de la figure
+                      legend_title_text=None ,
+                      legend=dict(orientation='h',
+                                  yanchor='bottom',
+                                  y=-0.05,
+                                  xanchor='center',
+                                  x=0.5
+                                 ),
+                      geo=dict(bgcolor='#f0f2f4'),
+                      paper_bgcolor='#f0f2f4'
                      )
+    
+    fig.update_geos(fitbounds='locations', visible=False)
+
     return(fig)

@@ -20,18 +20,16 @@ def MoughataasMap(gj, df, tauxIA) :
     # Ajout d'une colonne mentionnant l'intervalle d'insécurité alimenatire 
     # dans lequel chaque zone se trouvent. Le but est de pouvoir ensuite colorer 
     # les zones par rapport à leur intervalle respectif.
-    df['filter_taux_ia'] = df['taux_ia']
-    df.loc[(df['filter_taux_ia'] < tauxIA)] = 0
-    df.loc[(df.filter_taux_ia==0), 'intervalles'] = 'Hors périmètre'
-    df.loc[(df.filter_taux_ia>0)&(df.filter_taux_ia<0.05), 'intervalles'] = '0-5%'
-    df.loc[(df.filter_taux_ia>=0.05)&(df.filter_taux_ia<0.10), 'intervalles'] = '5-10%'
-    df.loc[(df.filter_taux_ia>=0.10)&(df.filter_taux_ia<0.20), 'intervalles'] = '10-20%'
-    df.loc[(df.filter_taux_ia>=0.20)&(df.filter_taux_ia<0.30), 'intervalles'] = '20-30%'
-    df.loc[(df.filter_taux_ia>=0.30)&(df.filter_taux_ia<0.40), 'intervalles'] = '30-40%'
-    df.loc[(df.filter_taux_ia>=0.40), 'intervalles'] = '> 40%'
+    df.loc[(df.taux_ia>0)&(df.taux_ia<0.05), 'intervalles'] = '0-5%'
+    df.loc[(df.taux_ia>=0.05)&(df.taux_ia<0.10), 'intervalles'] = '5-10%'
+    df.loc[(df.taux_ia>=0.10)&(df.taux_ia<0.20), 'intervalles'] = '10-20%'
+    df.loc[(df.taux_ia>=0.20)&(df.taux_ia<0.30), 'intervalles'] = '20-30%'
+    df.loc[(df.taux_ia>=0.30)&(df.taux_ia<0.40), 'intervalles'] = '30-40%'
+    df.loc[(df.taux_ia>=0.40), 'intervalles'] = '> 40%'
+    df.loc[df.taux_ia < tauxIA, 'intervalles'] = 'Hors périmètre'
 
     # Color Map : dictionnaire permettat d'attribuer à chaque catégorie une couleur spécifique 
-    color_map={'Hors périmètre': '#f1f1f1',
+    color_map={'Hors périmètre': '#333333',
                '0-5%': '#024B1A',
                '5-10%': '#A2BF05',
                '10-20%': '#FAE147',
@@ -79,13 +77,13 @@ def MoughataasMap(gj, df, tauxIA) :
     fig.update_layout(margin=dict(r=0, t=0, l=0, b=0), # Supression des marges de la figure
                       legend_title_text=None ,
                       legend=dict(orientation='h',
-                                  yanchor='bottom',
+                                  yanchor='middle',
                                   y=-0.05,
                                   xanchor='center',
                                   x=0.5
                                  ),
                       geo=dict(bgcolor='#f0f2f4'),
-                      paper_bgcolor='#f0f2f4'
+                      paper_bgcolor='white'
                      )
     
     fig.update_geos(fitbounds='locations', visible=False)

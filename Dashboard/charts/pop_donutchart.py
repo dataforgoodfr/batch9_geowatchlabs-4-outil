@@ -2,9 +2,7 @@ import pandas as pd
 import numpy as np
 import plotly.graph_objects as go
 
-def PopDonutChart(df, tauxIA):
-    # Filtre de la df par rapport à un certain niveau d'insécurité alimentaire
-    df.loc[df.taux_ia < tauxIA, 'intervalles'] = 'Hors périmètre'
+def PopDonutChart(df):
 
     # Calcul du nombre d'habitants et nombre de ménages touchés suivant les seuils d'IA
     pop_total = df['n_pop'].sum()
@@ -63,6 +61,7 @@ def PopDonutChart(df, tauxIA):
                      )
 
     # Amélioration de la qualité d'image
-    config = {'toImageButtonOptions': {'scale': 3}}
+    #config = {'toImageButtonOptions': {'scale': 3}}
 
-    return fig.show(config=config)
+    # return fig.show(config=config)
+    return fig

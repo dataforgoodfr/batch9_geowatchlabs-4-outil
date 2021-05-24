@@ -7,8 +7,10 @@ import dash_daq as daq
 import pandas as pd
 import numpy as np
 import dash_daq as daq
-from charts.moughataas_map import InfoMoughataas, MoughataasMap
+from charts.moughataas_map import  MoughataasMap
+from charts.pop_donutchart import PopDonutChart
 from utils.loadGeojson import LoadGeojson
+from utils.readInfoMoughataas import InfoMoughataas
 
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
@@ -36,6 +38,8 @@ app.layout = html.Div([
                 [
                     dcc.Tab(label="Pays",  value = 'pays', style = {'display': 'flex'},
                     children= [ 
+                                html.Div(style = {'margin-bottom' : '60px'}, 
+                                    children = dcc.Graph (figure = PopDonutChart(info_moughataas))),
                                 html.Div(
                                 style={'width': '30%', 'float' : 'left', 'text-align' : 'center', 'padding-top' : '50px'},
                                 children= [
@@ -73,7 +77,6 @@ def update_figure(value):
 def update_map(clickData):    
     if clickData is not None:            
         location = clickData['points'][0]['location']
-        location = info_moughataas.loc[location, 'nom']
         tab = 'region'
     else : 
         location = 'pas de location'

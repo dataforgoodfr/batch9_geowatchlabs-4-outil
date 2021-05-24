@@ -6,17 +6,12 @@ import plotly.express as px
 def InfoMoughataas(gj) :
     # Création d'une table reprenant le taux d'insécurité alimenataire,
     # le nombre d'habitants et le nombre de ménages par Moughataas
-    info_moughataas = pd.DataFrame()
-    info_moughataas['nom'] = [gj['features'][i]['properties']['NAME_2'] for i in range(len(gj['features']))]
-    info_moughataas['taux_ia'] = [gj['features'][i]['properties']['taux_IA'] for i in range(len(gj['features']))]
-    info_moughataas['n_pop'] = [gj['features'][i]['properties']['n_pop'] for i in range(len(gj['features']))]
-    info_moughataas['n_hh'] = [gj['features'][i]['properties']['n_hh'] for i in range(len(gj['features']))]
+    df = pd.DataFrame()
+    df['nom'] = [gj['features'][i]['properties']['NAME_2'] for i in range(len(gj['features']))]
+    df['taux_ia'] = [gj['features'][i]['properties']['taux_IA'] for i in range(len(gj['features']))]
+    df['n_pop'] = [gj['features'][i]['properties']['n_pop'] for i in range(len(gj['features']))]
+    df['n_hh'] = [gj['features'][i]['properties']['n_hh'] for i in range(len(gj['features']))]
     
-    # Résolution du problème d'encodage des lettres avec accent
-    #info_moughataas['nom'] = [name.encode("latin_1").decode("utf_8") for name in info_moughataas['nom']]
-    return(info_moughataas)
-
-def MoughataasMap(gj, df, tauxIA) : 
     # Ajout d'une colonne mentionnant l'intervalle d'insécurité alimenatire 
     # dans lequel chaque zone se trouvent. Le but est de pouvoir ensuite colorer 
     # les zones par rapport à leur intervalle respectif.
@@ -26,17 +21,24 @@ def MoughataasMap(gj, df, tauxIA) :
     df.loc[(df.taux_ia>=0.20)&(df.taux_ia<0.30), 'intervalles'] = '20-30%'
     df.loc[(df.taux_ia>=0.30)&(df.taux_ia<0.40), 'intervalles'] = '30-40%'
     df.loc[(df.taux_ia>=0.40), 'intervalles'] = '> 40%'
+    
+    # Résolution du problème d'encodage des lettres avec accent
+    #df['nom'] = [name.encode("latin_1").decode("utf_8") for name in df['nom']]
+    return(df)
+
+def MoughataasMap(gj, df, tauxIA) :    
+    # Filtre de la df par rapport au taux d'IA défini
     df.loc[df.taux_ia < tauxIA, 'intervalles'] = 'Hors périmètre'
 
-    # Color Map : dictionnaire permettat d'attribuer à chaque catégorie une couleur spécifique 
-    color_map={'Hors périmètre': '#333333',
-               '0-5%': '#024B1A',
-               '5-10%': '#A2BF05',
-               '10-20%': '#FAE147',
-               '20-30%': '#FAA94B',
-               '30-40%' : '#F16C54',
-               '> 40%' : '#D21E42'
-              }
+    # Color Map : dictionnaire permettant d'attribuer à chaque catégorie une couleur spécifique 
+    color_map = {'Hors périmètre': '#333333',
+                 '0-5%': '#024B1A',
+                 '5-10%': '#A2BF05',
+                 '10-20%': '#FAE147',
+                 '20-30%': '#FAA94B',
+                 '30-40%' : '#F16C54',
+                 '> 40%' : '#D21E42'
+                }
 
     # Mise en forme des valeurs 'nombre d'habitants' et 'nombre de ménages'.
     # Utilisation de l'espace comme séparateur de milliers.

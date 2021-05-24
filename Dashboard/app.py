@@ -2,10 +2,8 @@
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
-from dash.dependencies import Input, Output, State
+from dash.dependencies import Input, Output
 import dash_daq as daq
-import pandas as pd
-import numpy as np
 import dash_daq as daq
 from charts.moughataas_map import  MoughataasMap
 from charts.pop_donutchart import PopDonutChart
@@ -18,6 +16,7 @@ app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 
 GJ = LoadGeojson('Dashboard/data/Moughataas_new.geojson')
 info_moughataas = InfoMoughataas(GJ)
+
 
 app.layout = html.Div([
     html.H1("Appli GeoWatch Labs", style= {'text-align' : 'center', 'margin-bottom' : '40px'}),
@@ -33,7 +32,6 @@ app.layout = html.Div([
     value='2011',
     style = {'margin-bottom' : '20px'}
 ) ,
-
     dcc.Tabs( id = 'tabs', value = '1', children=
                 [
                     dcc.Tab(label="Pays",  value = 'pays', style = {'display': 'flex'},
@@ -54,7 +52,10 @@ app.layout = html.Div([
                             style = {'width' : '70%', 'float': 'right', 'padding-top' : '50px'},
                             children= [dcc.Graph(id ='graph1')])
                             ]),
-                    dcc.Tab(label="Moughataas", value = 'region', children= [html.Div ( id= 'graph2')])],
+                    dcc.Tab(label="Moughataas", value = 'region', children= [
+                        dcc.Dropdown(id="dropdownRegions"), 
+                        html.Div ( id= 'graph2')
+                        ])],
                     )
                 ])
 
@@ -62,26 +63,40 @@ app.layout = html.Div([
     Output('graph1', 'figure'),
     Output('population', 'children'),
     Output('foyers', 'children'),
+    Output('dropdownRegions', 'options'),
     [Input('iaThreshold', 'value')])
 def update_figure(value):
     df = info_moughataas.copy()
     df_filtered = df.loc[df.taux_ia> value, ['n_pop', 'n_hh']]
     pop = df_filtered.n_pop.sum()
     foy= df_filtered.n_hh.sum()
-    return MoughataasMap(gj= GJ, df=df, tauxIA = value), '{:,.0f}'.format(pop), '{:,.0f}'.format(foy)
+    opt = [{'label': i, 'value': i} for i in df.loc[df.taux_ia > value, 'nom'].sort_values()]
+    return MoughataasMap(gj= GJ, df=df, tauxIA = value), '{:,.0f}'.format(pop), '{:,.0f}'.format(foy), opt
 
 @app.callback(
     Output('graph2', 'children'),
     Output('tabs', 'value'),
-    [Input('graph1', 'clickData')])
-def update_map(clickData):    
+    Output('dropdownRegions', 'value'),
+    [Input('graph1', 'clickData'), 
+    Input('graph2', 'children'), 
+    Input('dropdownRegions', 'value')])
+def update_map(clickData, children, value):    
     if clickData is not None:            
         location = clickData['points'][0]['location']
+        if children == location : 
+            location = value
         tab = 'region'
+    elif value is not None : 
+        tab = 'region'
+        location= value
     else : 
         location = 'pas de location'
         tab = 'pays'
-    return location, tab
+    return location, tab, location
+
+
+
+
 
 if __name__ == '__main__':
     app.run_server(debug=True)

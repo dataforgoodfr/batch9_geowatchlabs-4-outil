@@ -1,0 +1,66 @@
+.main-app{
+  font-size: 1.2em;
+  padding: 2rem 4rem;
+}
+
+h1{
+  font-size: 3em;
+  text-align: center;
+  margin : 2rem auto;
+}
+
+h2{
+  font-size: 2em;
+  margin : 5rem auto;
+}
+
+h3{
+  font-size: 2rem;
+}
+
+.tabs{
+  display:flex;
+}
+
+.wrapper-select-slider{
+  margin: 3rem auto;
+  display: flex;
+  justify-content: space-around;
+}
+
+.wrapper-select{
+  width: 40%;
+  display:flex;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+#yearChoice{
+  width: 30%;
+  margin-left: 2rem;
+}
+
+.wrapper-slider{
+  width: 40%;
+  display: flex;
+  align-items: center;
+}
+
+#iaThreshold{
+  margin-left: 2rem;
+}
+
+.map{
+  width: 100%;
+  margin-bottom: 10rem;
+}
+
+.pop{
+  display:flex;
+  justify-content: space-between;
+}
+
+.pop_donut{
+  width: 80%;
+}
+

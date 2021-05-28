@@ -18,46 +18,79 @@ GJ = LoadGeojson('Dashboard/data/Moughataas_new.geojson')
 info_moughataas = InfoMoughataas(GJ)
 
 
-app.layout = html.Div([
-    html.H1("Appli GeoWatch Labs", style= {'text-align' : 'center', 'margin-bottom' : '40px'}),
-    html.H6("Choix de l'année", style = {'margin-bottom' : '20px'}),
-    dcc.Dropdown(id='yearChoice',
-    options=[
-        {'label': 'Année 2010', 'value': 2010},
-        {'label': 'Année 2011', 'value': 2011},
-        {'label': 'Année 2012', 'value': 2012},
-        {'label': 'Année 2013', 'value': 2013},
-        {'label': 'Année 2014', 'value': 2014}
-    ],
-    value='2011',
-    style = {'margin-bottom' : '20px'}
-) ,
-    dcc.Tabs( id = 'tabs', value = '1', children=
-                [
-                    dcc.Tab(label="Pays",  value = 'pays', style = {'display': 'flex'},
-                    children= [ 
-                                html.Div(style = {'margin-bottom' : '60px'}, 
-                                    children = dcc.Graph (figure = PopDonutChart(info_moughataas))),
-                                html.Div(
-                                style={'width': '30%', 'float' : 'left', 'text-align' : 'center', 'padding-top' : '50px'},
-                                children= [
-                                html.H3( "Taux d'insécurité alimentaire limite"),
-                                html.Div(style = {'margin' : 'auto', 'margin-top' : '50px', 'margin-bottom' : '60px'}, 
-                                        children=[daq.Slider(id = 'iaThreshold', min=0, max=1, value=0.2, handleLabel={"showCurrentValue": True,"label": "IA"},step = 0.01)]),
-                                html.H3('Population'),
-                                html.Div(style = {'font-size' : '25px', 'margin-bottom': '60px'}, id= 'population'),
-                                html.H3('Foyers'),
-                                html.Div(style = {'font-size' : '25px'}, id='foyers')]),
+app.layout = html.Div(
+    className="main-app",
+    children=[
+    html.H1("GeoWatch Labs"),
+    html.H2("Taux d'insécurité alimentaire en Mauritanie"),
+    dcc.Tabs( 
+        id = 'tabs',
+        value = '1',
+        children=[
+            dcc.Tab(
+                label="Pays",
+                value = 'pays',
+                children = [ 
+                    html.Div(
+                        children= [
+                            html.Div(
+                                className="wrapper-select-slider",
+                                children=[
+                                    html.Div(
+                                        className="wrapper-select",
+                                        children=[
+                                            html.H3("Choix de l'année"),
+                                            dcc.Dropdown(
+                                                id='yearChoice',
+                                                className="select-year",
+                                                options=[
+                                                    {'label': 'Année 2010', 'value': 2010},
+                                                    {'label': 'Année 2011', 'value': 2011},
+                                                    {'label': 'Année 2012', 'value': 2012},
+                                                    {'label': 'Année 2013', 'value': 2013},
+                                                    {'label': 'Année 2014', 'value': 2014}
+                                                ],
+                                            value='2011',
+                                            ),
+                                        ]),
+                                    html.Div(
+                                        className="wrapper-slider",
+                                        children=[
+                                            html.H3("Choix du seuil"),
+                                            daq.Slider(id = 'iaThreshold', min=0, max=1, value=0.2, handleLabel={"showCurrentValue": True,"label": "IA"},step = 0.01)
+                                        ]),
+                                ]),
+                        ]),
                         html.Div( 
-                            style = {'width' : '70%', 'float': 'right', 'padding-top' : '50px'},
-                            children= [dcc.Graph(id ='graph1')])
-                            ]),
-                    dcc.Tab(label="Moughataas", value = 'region', children= [
+                            className="map",
+                            children= [dcc.Graph(id ='graph1')]),
+                        html.Div(
+                            className="pop",
+                            children=[
+                                html.Div(
+                                    className="pop_datas",
+                                    children=[
+                                        html.H3('Population'),
+                                        html.Div(
+                                            id= 'population'),
+                                        html.H3('Foyers'),
+                                        html.Div(
+                                            id='foyers'),
+                                    ]
+                                ),
+                                html.Div( 
+                                    className="pop_donut",
+                                    children= [dcc.Graph (figure = PopDonutChart(info_moughataas))]),
+                            ]),      
+                ]),
+                dcc.Tab(label="Moughataas", value = 'region',
+                    children= [
                         dcc.Dropdown(id="dropdownRegions"), 
                         html.Div ( id= 'graph2')
-                        ])],
-                    )
-                ])
+                    ])
+        ],
+    )
+])
 
 @app.callback(
     Output('graph1', 'figure'),

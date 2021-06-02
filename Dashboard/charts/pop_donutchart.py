@@ -57,8 +57,15 @@ def PopDonutChart(df):
                                     'font_size': 20,
                                     'showarrow': False
                                    }
-                                  ]
+                                  ],
+                    legend=dict(orientation='h',
+                                  yanchor='middle',
+                                  y=-0.05,
+                                  xanchor='center',
+                                  x=0.5
+                                 ),
                      )
+
 
     # Amélioration de la qualité d'image
     #config = {'toImageButtonOptions': {'scale': 3}}

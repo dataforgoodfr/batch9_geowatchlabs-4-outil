@@ -62,26 +62,54 @@ app.layout = html.Div(
                                 ]),
                         ]),
                         html.Div( 
-                            className="map",
-                            children= [dcc.Graph(id ='graph1')]),
-                        html.Div(
-                            className="pop",
-                            children=[
+                            className="main",
+                            children = [
                                 html.Div(
-                                    className="pop_datas",
-                                    children=[
-                                        html.H3('Population'),
+                                    className= 'stats',
+                                    children = [
+                                        html.H3("Statistiques"),
                                         html.Div(
-                                            id= 'population'),
-                                        html.H3('Foyers'),
+                                            className = 'flex-container', 
+                                            children = [
+                                                html.Div(
+                                                    className = 'div1', 
+                                                    children = [
+                                                        html.H3("Population"),
+                                                        html.Div(id= 'population')
+                                                    ]
+                                                ), 
+                                                html.Div(
+                                                    className = 'div2', 
+                                                    children = [
+                                                        html.I(className="fas fa-male")
+                                                    ])
+                                            ]),
                                         html.Div(
-                                            id='foyers'),
-                                    ]
-                                ),
-                                html.Div( 
-                                    className="pop_donut",
-                                    children= [dcc.Graph (figure = PopDonutChart(info_moughataas))]),
-                            ]),      
+                                            className = 'flex-container', 
+                                            children = [
+                                                html.Div(
+                                                    className = 'div1', 
+                                                    children = [
+                                                        html.H3("Foyers"),
+                                                        html.Div(id= 'foyers')
+                                                ]), 
+                                                html.Div(
+                                                    className = 'div2', 
+                                                    children = [
+                                                        html.I(className="fas fa-male")
+                                                    ])
+                                                ]),
+
+                                        html.Div( 
+                                                className="pop_donut",
+                                                children= [dcc.Graph (figure = PopDonutChart(info_moughataas))]
+                                            )
+                                        ]),
+                                html.Div(
+                                className = 'map',
+                                children= [dcc.Graph(id ='graph1')])
+                            ]                            
+                            ),
                 ]),
                 dcc.Tab(label="Moughataas", value = 'region',
                     children= [

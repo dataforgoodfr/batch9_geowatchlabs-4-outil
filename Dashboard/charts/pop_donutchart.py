@@ -66,7 +66,7 @@ def PopDonutChart(df):
                                     'showarrow': False
                                    }
                                   ],
-                      modebar=dict(orientation='h',
+                      modebar=dict(orientation='v',
                                    color= 'white',
                                    bgcolor='#000066')
                      )

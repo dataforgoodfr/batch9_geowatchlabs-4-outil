@@ -70,9 +70,6 @@ app.layout = html.Div(
                                                  style={'width': '100%', 
                                                         'display': 'inline-block',
                                                         'box-shadow': '5px 5px 5px #d9d9d9'
-      
-
-
                                  }),
                         html.Div(
                             className="pop",

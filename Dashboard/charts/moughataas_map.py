@@ -60,7 +60,10 @@ def MoughataasMap(gj, df, tauxIA) :
                                   x=0.5
                                  ),
                       geo=dict(bgcolor='#f0f2f4'),
-                      paper_bgcolor='white'
+                      paper_bgcolor='#f0f2f4',                      
+                      modebar=dict(orientation='v',
+                                   color= 'white',
+                                   bgcolor='#000066')
                      )
     
     fig.update_geos(fitbounds='locations', visible=False)

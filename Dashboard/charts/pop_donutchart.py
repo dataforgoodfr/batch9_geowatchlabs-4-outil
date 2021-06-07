@@ -50,7 +50,15 @@ def PopDonutChart(df):
                    )
 
     # Mise en forme
-    fig.update_layout(paper_bgcolor='#f0f2f4',
+    fig.update_layout(margin=dict(r=0, t=50, l=0, b=0), # Ajustement des marges
+                      # Positionnement de la légende
+                      legend=dict(orientation='h',
+                                  yanchor='middle',
+                                  y=-0.10,
+                                  xanchor='center',
+                                  x=0.5
+                                 ),
+                      paper_bgcolor='#f0f2f4',
                       annotations=[{'text': '{:,.0f}'.format(pop_total).replace(',', ' '),
                                     'x': 0.5,
                                     'y': 0.5,
@@ -58,14 +66,10 @@ def PopDonutChart(df):
                                     'showarrow': False
                                    }
                                   ],
-                    legend=dict(orientation='h',
-                                  yanchor='middle',
-                                  y=-0.05,
-                                  xanchor='center',
-                                  x=0.5
-                                 ),
+                      modebar=dict(orientation='v',
+                                   color= 'white',
+                                   bgcolor='#000066')
                      )
-
 
     # Amélioration de la qualité d'image
     #config = {'toImageButtonOptions': {'scale': 3}}

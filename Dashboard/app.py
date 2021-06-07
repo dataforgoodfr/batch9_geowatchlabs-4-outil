@@ -67,7 +67,8 @@ app.layout = html.Div(
                                 html.Div(
                                     className= 'stats',
                                     children = [
-                                        html.H3("Statistiques"),
+                                        html.H3("Population concernée"),
+                                        html.P("Pour le taux d'IA sélectionné"),
                                         html.Div(
                                             className = 'flex-container', 
                                             children = [
@@ -99,15 +100,31 @@ app.layout = html.Div(
                                                         html.I(className="fas fa-male")
                                                     ])
                                                 ]),
-
                                         html.Div( 
                                                 className="pop_donut",
-                                                children= [dcc.Graph (figure = PopDonutChart(info_moughataas))]
+                                                children= [
+                                                    html.H3('Statistiques gloables'),
+                                                    html.P("Pour l'ensemble de la mauritanie"),
+                                                    dcc.Graph (
+                                                        className = 'graph', 
+                                                        figure = PopDonutChart(info_moughataas), 
+                                                        config = {'toImageButtonOptions': {'scale': 3},
+                                                                  'modeBarButtonsToRemove': ['hoverClosestPie'],
+                                                                  'displayModeBar': True})
+                                                    ]
                                             )
                                         ]),
                                 html.Div(
                                 className = 'map',
-                                children= [dcc.Graph(id ='graph1')])
+                                children= [
+                                    html.H3("Carte de la Mauritanie"),
+                                    dcc.Graph(className = 'graph',
+                                              id ='graph1', 
+                                              config = {'toImageButtonOptions': {'scale': 3},
+                                                        'displayModeBar': True,
+                                                        'modeBarButtonsToRemove': ['pan2d', 'select2d', 'lasso2d', 'hoverClosestGeo']},
+                                              style= {'height' : 'inherit'})
+                                    ])
                             ]                            
                             ),
                 ]),

@@ -60,8 +60,8 @@ def MoughataasMap(gj, df, tauxIA) :
                                   xanchor='center',
                                   x=0.5
                                  ),
-                      geo=dict(bgcolor='red'),
-                      paper_bgcolor='yellow',                      
+                      geo=dict(bgcolor='white'),
+                      paper_bgcolor='white',                      
                       modebar=dict(orientation='v',
                                    color= 'white',
                                    bgcolor='#000066')

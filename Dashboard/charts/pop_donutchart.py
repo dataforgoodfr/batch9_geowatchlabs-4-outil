@@ -58,7 +58,7 @@ def PopDonutChart(df):
                                   xanchor='center',
                                   x=0.5
                                  ),
-                      paper_bgcolor='#f0f2f4',
+                      paper_bgcolor='white',
                       annotations=[{'text': '{:,.0f}'.format(pop_total).replace(',', ' '),
                                     'x': 0.5,
                                     'y': 0.5,

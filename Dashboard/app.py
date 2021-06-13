@@ -88,12 +88,26 @@ app.layout = html.Div(
                             className="pop",
                             children=[
                                 html.Div(
-                                    className="pop_datas",
-                                    children=[
-                                        html.H3('Population'),
+                                    className= 'stats',
+                                    children = [
+                                        html.H3("Population concernée"),
+                                        html.P("Pour le taux d'IA sélectionné"),
                                         html.Div(
-                                            id= 'population'),
-                                        html.H3('Foyers'),
+                                            className = 'flex-container', 
+                                            children = [
+                                                html.Div(
+                                                    className = 'div1', 
+                                                    children = [
+                                                        html.H3("Population"),
+                                                        html.Div(id= 'population')
+                                                    ]
+                                                ), 
+                                                html.Div(
+                                                    className = 'div2', 
+                                                    children = [
+                                                        html.I(className="fas fa-male")
+                                                    ])
+                                            ]),
                                         html.Div(
                                             id='foyers'),
                                     ]

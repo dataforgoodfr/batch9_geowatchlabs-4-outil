@@ -51,16 +51,56 @@ h3{
 }
 
 .map{
-  width: 100%;
-  margin-bottom: 10rem;
+  width: 70%;
+  height: 100%;
+  margin : auto 4rem;
+  /* margin : 0rem 4rem; */
+  float : right;
+  /* display: inline-block; */
+  justify-content: center;
+}
+.graph{
+  box-shadow: 5px 5px 5px #d9d9d9;
 }
 
 .pop{
   display:flex;
+  min-height: 100%;
+  height : 100%;
   justify-content: space-between;
 }
 
 .pop_donut{
-  width: 80%;
+  width: 100%;
 }
 
+
+.flex-container {
+  display: flex;
+  margin-bottom : 2rem; 
+}
+
+.flex-container > .div1 {
+  background-color: #f1f1f1;
+  padding: 5px 20px;
+  width : 90%;
+}
+
+.flex-container > .div2 {
+  background-color: #1f78b4;
+  padding: 20px;
+  width: 10%;
+}
+
+.stats {
+  width :30%;
+  float : left;
+  /* display: inline-block; */
+}
+
+.main{
+  width: 95%;
+  display:flex;
+  align-items: center;
+  margin-bottom: 2rem;
+}

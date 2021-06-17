@@ -5,10 +5,12 @@ import dash_html_components as html
 from dash.dependencies import Input, Output
 import dash_daq as daq
 import dash_daq as daq
+import dash_auth
 from charts.moughataas_map import  MoughataasMap
 from charts.pop_donutchart import PopDonutChart
 from utils.loadGeojson import LoadGeojson
 from utils.readInfoMoughataas import InfoMoughataas
+
 
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css', 
                         {
@@ -23,6 +25,15 @@ external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css',
 app = dash.Dash(__name__,
                 external_stylesheets=external_stylesheets,
 )
+
+# VALID_USERNAME_PASSWORD_PAIRS = {
+#     'geowatch': 'geowatch'
+# }
+
+# auth = dash_auth.BasicAuth(
+#     app,
+#     VALID_USERNAME_PASSWORD_PAIRS
+# )
 
 GJ = LoadGeojson('Dashboard/data/Moughataas_new.geojson')
 info_moughataas = InfoMoughataas(GJ)

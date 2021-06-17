@@ -82,31 +82,8 @@ app.layout = html.Div(
                                 ]),
                         ]),
                         html.Div( 
-                                    className="pop_donut",
-                                    children= [dcc.Graph (figure = PopDonutChart(info_moughataas),    
-                                                          config = {'toImageButtonOptions': {'scale': 3},
-                                                                    'modeBarButtonsToRemove': ['hoverClosestPie'],
-                                                                    'displayModeBar': True})],
-                                                                    style={'width': 600,
-                                                        'display': 'inline-block',
-                                                        'box-shadow': '5px 5px 5px #d9d9d9', 
-                                                        'margin-right': '15px',
-                                                        'margin-bottom': '15px'
-                                 }),
-                        html.Div( 
-                            className="map",
-                            children= [dcc.Graph(id ='graph1',    
-                                                 config = {'toImageButtonOptions': {'scale': 3},
-                                                           'displayModeBar': True,
-                                                           'modeBarButtonsToRemove': ['pan2d', 'select2d', 'lasso2d', 'hoverClosestGeo']})],
-                                                 style={'width': '61%',
-                                                        'display': 'inline-block',
-                                                        'box-shadow': '5px 5px 5px #d9d9d9',
-                                                        'margin-bottom': '15px'
-                                 }),
-                        html.Div(
-                            className="pop",
-                            children=[
+                            className="main",
+                            children = [
                                 html.Div(
                                     className= 'stats',
                                     children = [
@@ -160,7 +137,7 @@ app.layout = html.Div(
                                 children= [
                                     html.H3("Carte de la Mauritanie"),
                                     dcc.Graph(
-                                              id ='git', 
+                                              id ='graph1', 
                                               config = {'toImageButtonOptions': {'scale': 3},
                                                         'displayModeBar': True,
                                                         'modeBarButtonsToRemove': ['pan2d', 'select2d', 'lasso2d', 'hoverClosestGeo']})

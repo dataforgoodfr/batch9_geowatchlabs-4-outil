@@ -60,13 +60,17 @@ def MoughataasMap(gj, df, tauxIA) :
                                   xanchor='center',
                                   x=0.5
                                  ),
-                      geo=dict(bgcolor='white'),
+                      geo=dict(scope='africa',
+                               projection={'type': 'equirectangular'},
+                               fitbounds='geojson',
+                               bgcolor='white', 
+                               visible=False),
                       paper_bgcolor='white',                      
                       modebar=dict(orientation='v',
                                    color= 'white',
                                    bgcolor='#000066')
                      )
     
-    fig.update_geos(fitbounds='locations', visible=False)
+    #fig.update_geos(fitbounds='locations', visible=False)
 
     return(fig)

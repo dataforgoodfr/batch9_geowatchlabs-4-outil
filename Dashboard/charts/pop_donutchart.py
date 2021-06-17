@@ -30,8 +30,9 @@ def PopDonutChart(df):
 
     fig = go.Figure(data=[go.Pie(labels=labels,
                                  values=values, 
-                                 hole=0.6, 
+                                 hole=0.55, 
                                  sort=False,
+                                 insidetextorientation='horizontal',
                                  customdata=customdata,
                                  # Particularité de go.Pie, 
                                  # il faut spécifier 2 positions pour customdata (customdata[0][0]) 
@@ -50,22 +51,22 @@ def PopDonutChart(df):
                    )
 
     # Mise en forme
-    fig.update_layout(margin=dict(r=0, t=50, l=0, b=0), # Ajustement des marges
+    fig.update_layout(margin=dict(r=0, t=125, l=0, b=50), # Ajustement des marges
+                      title={'text': "Population touchée par seuil d'insécurité alimentaire",
+                             'x': 0.5,
+                             'y': 0.98,
+                             'font_size': 24
+                            },
+                      title_pad={'t': 10},
                       # Positionnement de la légende
                       legend=dict(orientation='h',
-                                  yanchor='middle',
-                                  y=-0.10,
+                                  yanchor='top',
+                                  y=1.20,
                                   xanchor='center',
-                                  x=0.5
+                                  x=0.5, 
+                                  font=dict(size=14)
                                  ),
                       paper_bgcolor='white',
-                      annotations=[{'text': '{:,.0f}'.format(pop_total).replace(',', ' '),
-                                    'x': 0.5,
-                                    'y': 0.5,
-                                    'font_size': 20,
-                                    'showarrow': False
-                                   }
-                                  ],
                       modebar=dict(orientation='v',
                                    color= 'white',
                                    bgcolor='#000066')

@@ -5,7 +5,7 @@ import dash_html_components as html
 from dash.dependencies import Input, Output
 import dash_daq as daq
 import dash_daq as daq
-#import dash_auth
+import dash_auth
 from charts.moughataas_map import  MoughataasMap
 from charts.pop_donutchart import PopDonutChart
 from utils.loadGeojson import LoadGeojson

@@ -126,9 +126,12 @@ app.layout = html.Div(
                                                     html.H3('Statistiques globales populations / ménages en Mauritanie'),
                                                     dcc.Graph (
                                                         figure = PopDonutChart(info_moughataas), 
-                                                        config = {'toImageButtonOptions': {'scale': 3},
-                                                                  'modeBarButtonsToRemove': ['hoverClosestPie'],
-                                                                  'displayModeBar': True})
+                                                        config = {'toImageButtonOptions': {'scale': 3, 
+                                                                                           'filename': f"Population en insécurité alimentaire en 2021"
+                                                                                          },
+                                                                  'modeBarButtons': [['toImage']],
+                                                                  'displayModeBar': True
+                                                                 })
                                                     ]
                                             )
                                         ]),
@@ -138,9 +141,12 @@ app.layout = html.Div(
                                     html.H3("Carte de la Mauritanie"),
                                     dcc.Graph(
                                               id ='graph1', 
-                                              config = {'toImageButtonOptions': {'scale': 3},
+                                              config = {'toImageButtonOptions': {'scale': 3, 
+                                                                                 'filename': f"Taux d'insécurité alimenatire par Moughataa en 2021"
+                                                       },
                                                         'displayModeBar': True,
-                                                        'modeBarButtonsToRemove': ['pan2d', 'select2d', 'lasso2d', 'hoverClosestGeo']})
+                                                        'modeBarButtons' : [['zoomIn2d', 'zoomOut2d', 'autoScale2d', 'toImage']]
+                                                       })
                                     ])
                             ]                            
                             ),

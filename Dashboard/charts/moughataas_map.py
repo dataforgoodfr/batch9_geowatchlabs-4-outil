@@ -52,13 +52,20 @@ def MoughataasMap(gj, df, tauxIA) :
                       hoverlabel=dict(bgcolor='#000066')) # Couleur de fond du hover
     
     fig.update_layout(height=800,
-                      margin={"r":0,"t":0,"l":0,"b":0}, # Supression des marges de la figure
+                      margin={"r":0,"t":80,"l":0,"b":0},
+                      title={'text': "Taux d'insécurité alimentaire par Moughataa",
+                             'x': 0.5,
+                             'y': 0.98,
+                             'font_size': 24
+                            },
+                      title_pad={'t': 10},
                       legend_title_text=None ,
                       legend=dict(orientation='h',
-                                  yanchor='middle',
-                                  y=-0.05,
+                                  yanchor='top',
+                                  y=1.05,
                                   xanchor='center',
-                                  x=0.5
+                                  x=0.5, 
+                                  font=dict(size=14)
                                  ),
                       geo=dict(scope='africa',
                                projection={'type': 'equirectangular'},

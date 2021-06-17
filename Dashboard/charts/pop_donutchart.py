@@ -52,7 +52,7 @@ def PopDonutChart(df):
 
     # Mise en forme
     fig.update_layout(margin=dict(r=0, t=125, l=0, b=50), # Ajustement des marges
-                      title={'text': "Population touchée par seuil d'insécurité alimentaire",
+                      title={'text': "Population touchée par seuil",
                              'x': 0.5,
                              'y': 0.98,
                              'font_size': 24

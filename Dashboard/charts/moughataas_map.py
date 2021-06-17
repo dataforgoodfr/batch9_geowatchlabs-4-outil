@@ -51,7 +51,8 @@ def MoughataasMap(gj, df, tauxIA) :
                                                 ),
                       hoverlabel=dict(bgcolor='#000066')) # Couleur de fond du hover
     
-    fig.update_layout(margin=dict(r=0, t=0, l=0, b=0), # Supression des marges de la figure
+    fig.update_layout(height=800,
+                      margin={"r":0,"t":0,"l":0,"b":0}, # Supression des marges de la figure
                       legend_title_text=None ,
                       legend=dict(orientation='h',
                                   yanchor='middle',
@@ -59,8 +60,8 @@ def MoughataasMap(gj, df, tauxIA) :
                                   xanchor='center',
                                   x=0.5
                                  ),
-                      geo=dict(bgcolor='#f0f2f4'),
-                      paper_bgcolor='#f0f2f4',                      
+                      geo=dict(bgcolor='white'),
+                      paper_bgcolor='white',                      
                       modebar=dict(orientation='v',
                                    color= 'white',
                                    bgcolor='#000066')

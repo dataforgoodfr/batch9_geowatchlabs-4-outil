@@ -1,12 +1,13 @@
 .main-app{
   font-size: 1.2em;
   padding: 2rem 4rem;
+  /* background-color: #F2F2F2; */
 }
 
 h1{
-  font-size: 3em;
+  font-size: 2em;
   text-align: center;
-  margin : 2rem auto;
+  margin : 2rem auto 4rem;
 }
 
 h2{
@@ -50,17 +51,26 @@ h3{
   margin-left: 2rem;
 }
 
-.map{
-  width: 70%;
-  height: 100%;
-  margin : auto 4rem;
-  /* margin : 0rem 4rem; */
-  float : right;
-  /* display: inline-block; */
-  justify-content: center;
+.jsx-3468109796.tab.tab--selected, .jsx-4017309047.tab-content {
+  background-color: #F2F2F2;
+  padding: 2rem;
 }
-.graph{
+
+.main{
+  display:flex;
+  margin-bottom: 2rem;
+  justify-content: space-between;
+}
+
+.map{
+  width: 65%;
+}
+
+.card_graph{
   box-shadow: 5px 5px 5px #d9d9d9;
+  background-color: white;
+  padding: 1rem;
+  text-align: center;
 }
 
 .pop{
@@ -74,33 +84,25 @@ h3{
   width: 100%;
 }
 
-
-.flex-container {
-  display: flex;
-  margin-bottom : 2rem; 
-}
-
-.flex-container > .div1 {
-  background-color: #f1f1f1;
+.card_pop > .div1 {
   padding: 5px 20px;
   width : 90%;
 }
 
-.flex-container > .div2 {
+.card_pop > .div2 {
   background-color: #1f78b4;
   padding: 20px;
   width: 10%;
 }
 
-.stats {
-  width :30%;
-  float : left;
-  /* display: inline-block; */
+.card_pop{
+  display: flex;
+  margin-bottom : 2rem; 
+  box-shadow: 5px 5px 5px #d9d9d9;
+  background-color: white;
+  text-align: center;
 }
 
-.main{
-  width: 95%;
-  display:flex;
-  align-items: center;
-  margin-bottom: 2rem;
+.stats {
+  width :30%;
 }

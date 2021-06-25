@@ -20,7 +20,6 @@ external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css',
                             'crossorigin': 'anonymous'
                         }
 ]
-# external_stylesheets = ['https://use.fontawesome.com/releases/v5.0.3/css/all.css']
 
 app = dash.Dash(__name__,
                 external_stylesheets=external_stylesheets,
@@ -38,7 +37,7 @@ app = dash.Dash(__name__,
 GJ = LoadGeojson('Dashboard/data/Moughataas_new.geojson')
 info_moughataas = InfoMoughataas(GJ)
 
-
+app.title = "GeoWatch Labs"
 app.layout = html.Div(
     className="main-app",
     children=[
@@ -89,41 +88,41 @@ app.layout = html.Div(
                                     children = [
                                         html.H3("Population concernée selon le taux d'IA sélectionné"),
                                         html.Div(
-                                            className = 'card_pop', 
+                                            className = 'wrapper_pop', 
                                             children = [
-                                                html.Div(
-                                                    className = 'div1', 
-                                                    children = [
-                                                        html.H3("Population"),
-                                                        html.Div(id= 'population'),
-                                                        html.I(className="fas fa-smile"),
-                                                    ]
-                                                ), 
-                                                html.Div(
-                                                    className = 'div2', 
-                                                    children = [
-                                                        html.I(className="fas fa-smile"),
-                                                    ])
-                                            ]),
-                                        html.Div(
-                                            className = 'card_pop', 
-                                            children = [
-                                                html.Div(
-                                                    className = 'div1', 
-                                                    children = [
-                                                        html.H3("Foyers"),
-                                                        html.Div(id= 'foyers')
-                                                ]), 
-                                                html.Div(
-                                                    className = 'div2', 
-                                                    children = [
-                                                        html.I(className="fas fa-address-book")
-                                                    ])
+                                            html.Div(
+                                                className = 'card_pop', 
+                                                children = [
+                                                    html.Div(
+                                                        className = 'div1', 
+                                                        children = [
+                                                            html.H3("Population"),
+                                                            html.Div(id= 'population'),
+                                                        ]
+                                                    ), 
+                                                    html.Div(
+                                                        className = 'div2',
+                                                    )
                                                 ]),
+                                            html.Div(
+                                                className = 'card_pop', 
+                                                children = [
+                                                    html.Div(
+                                                        className = 'div1', 
+                                                        children = [
+                                                            html.H3("Foyers"),
+                                                            html.Div(id= 'foyers')
+                                                    ]), 
+                                                    html.Div(
+                                                        className = 'div2', 
+                                                    )
+                                                    ]),
+                                            ]
+
+                                        ),
                                         html.Div( 
                                                 className="pop_donut",
                                                 children= [
-                                                    html.H3('Statistiques globales populations / ménages en Mauritanie'),
                                                     dcc.Graph (
                                                         figure = PopDonutChart(info_moughataas), 
                                                         config = {'toImageButtonOptions': {'scale': 3, 
@@ -138,11 +137,10 @@ app.layout = html.Div(
                                 html.Div(
                                 className = 'map card_graph',
                                 children= [
-                                    html.H3("Carte de la Mauritanie"),
                                     dcc.Graph(
                                               id ='graph1', 
                                               config = {'toImageButtonOptions': {'scale': 3, 
-                                                                                 'filename': f"Taux d'insécurité alimenatire par Moughataa en 2021"
+                                                                                 'filename': "Taux d'insécurité alimentaire par Moughataa en 2021"
                                                        },
                                                         'displayModeBar': True,
                                                         'modeBarButtons' : [['zoomIn2d', 'zoomOut2d', 'autoScale2d', 'toImage']]

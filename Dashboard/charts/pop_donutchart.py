@@ -51,7 +51,8 @@ def PopDonutChart(df):
                    )
 
     # Mise en forme
-    fig.update_layout(margin=dict(r=0, t=125, l=0, b=50), # Ajustement des marges
+    fig.update_layout(height=600,
+                      margin=dict(r=0, t=125, l=0, b=50), # Ajustement des marges
                       title={'text': "Population touchée par seuil",
                              'x': 0.5,
                              'y': 0.98,
@@ -61,7 +62,7 @@ def PopDonutChart(df):
                       # Positionnement de la légende
                       legend=dict(orientation='h',
                                   yanchor='top',
-                                  y=1.20,
+                                  y=1.15,
                                   xanchor='center',
                                   x=0.5, 
                                   font=dict(size=14)

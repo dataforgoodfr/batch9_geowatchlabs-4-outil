@@ -54,7 +54,7 @@ app.layout = html.Div(
                     html.Div(
                         children= [
                             html.Div(
-                                className="wrapper-select-slider card_graph",
+                                className="wrapper-select-slider",
                                 children=[
                                     html.Div(
                                         className="wrapper-select",
@@ -121,7 +121,7 @@ app.layout = html.Div(
                                                     ])
                                                 ]),
                                         html.Div( 
-                                                className="pop_donut card_graph",
+                                                className="pop_donut",
                                                 children= [
                                                     html.H3('Statistiques globales populations / ménages en Mauritanie'),
                                                     dcc.Graph (

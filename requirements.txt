@@ -1,0 +1,7 @@
+pandas==1.2.4
+plotly==4.14.3
+numpy==1.20.2
+geojson==2.5.0
+geojson==2.5.0
+dash-auth==1.4.1
+gunicorn
